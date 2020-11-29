@@ -1,0 +1,35 @@
+{
+  "name": "08-multi-db-refactor-postgres",
+  "version": "1.0.0",
+  "description": "docker run --name postgres -e POSTGRES_USER=rasegador -e POSTGRES_PASSWORD=caique2002 -e POSTGRES_DB=herois -p 5432:5432 -d postgres",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha src/tests/*.js",
+    "test:prod": "cross-env NODE_ENV=prod npm t",
+    "prod": "cross-env NODE_ENV=prod node src/api.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@hapi/joi": "^15.1.1",
+    "bcrypt": "^5.0.0",
+    "boom": "^7.3.0",
+    "dotenv": "^8.2.0",
+    "fs": "0.0.1-security",
+    "hapi": "^18.1.0",
+    "hapi-auth-jwt2": "^10.2.0",
+    "hapi-swagger": "^9.1.3",
+    "inert": "^5.1.3",
+    "jsonwebtoken": "^8.5.1",
+    "multer": "^1.4.2",
+    "pg": "^8.4.1",
+    "pg-hstore": "^2.3.3",
+    "sequelize": "^6.3.5",
+    "vision": "^5.4.4"
+  },
+  "devDependencies": {
+    "cross-env": "^7.0.2",
+    "mocha": "^8.1.3"
+  }
+}
