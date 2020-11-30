@@ -60,8 +60,8 @@ class AuthMotoristaRoutes extends BaseRoute {
                     id: usuario.id
                 }, this.secret)
                 return {
-                    token
-
+                    token,
+                    usuario
                 }
             }
         }
@@ -89,9 +89,9 @@ class AuthMotoristaRoutes extends BaseRoute {
                         telefone: Joi.number().required(),
                         email: Joi.string().required().min(3).max(100),
                         destino: Joi.string().required().min(3).max(100),
-                        presenca: Joi.boolean().required(),
+                        presenca: Joi.boolean(),
                         endereco: Joi.string().required(),
-                        id_motorista: Joi.number().required()
+                        id_motorista: Joi.number()
                     }          
                 }
             },

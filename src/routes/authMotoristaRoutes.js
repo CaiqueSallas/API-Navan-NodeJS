@@ -63,14 +63,15 @@ class AuthMotoristaRoutes extends BaseRoute {
                     id: usuario.id
                 }, this.secret)
                 return {
-                    token
-
+                    token,
+                    usuario
                 }
             }
         }
     }
 
     register() {
+        console.log('436734573645')
         return {
             path: `/registerMotorista`,
             method: 'POST',
@@ -90,22 +91,32 @@ class AuthMotoristaRoutes extends BaseRoute {
                         password: Joi.string().required().min(3),
                         nome: Joi.string().required().min(3).max(100),
                         cpf: Joi.string().required().min(9).max(100),
-                        telefone: Joi.number().required().min(9),
-                        email: Joi.string().required().min(3).max(100),                        
+                        telefone: Joi.number().required().min(3),
+                        email: Joi.string().required().min(3).max(100),
                     }
                 }
             },
-            handler: async (request) => {
+            handler: async (request, response) => {
                 const userData = request.payload
+                console.log(userData)
                 const cod = await PasswordHelper.hashPassword(userData.password)
                 userData.password = cod
-                const result = await this.db.create(userData)
+
+                // try {
+                //     await this.db.create(userData)
+                // } catch (error){
+                //     console.log('error', error)
+                // }
+
+                const result = await this.db.create(userData);
+                
                 return {
                     message: "Motorista criado com sucesso!",
                     id: result.id
                 }
 
             }
+
         }
     }
     upload() {

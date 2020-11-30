@@ -83,6 +83,7 @@ class PassageiroRoutes extends BaseRoute {
             path: '/passageiros/{id}',
             method: 'PATCH',
             config: {
+                auth: false,
                 tags: ['api'],
                 description: 'Deve atualizar um passageiro',
                 notes: 'Deve atualizar um passageiro através do ID',
@@ -100,7 +101,6 @@ class PassageiroRoutes extends BaseRoute {
                     payload: {                        
                         presenca: Joi.boolean().required(),  
                     },
-                    headers
                 }
             },
             handler: async (request, headers) => {
