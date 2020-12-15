@@ -1,11 +1,6 @@
 const BaseRoute = require('./base/baseRoute')
 const Joi = require('@hapi/joi');
 const Boom = require('Boom')
-const fs = require('fs')
-
-
-const multer = require('multer');
-const upload = multer({ dest: 'uploads/' })
 
 //npm i jsonwebtoken
 // "@hapi/joi": "^15.1.1",
@@ -71,7 +66,6 @@ class AuthMotoristaRoutes extends BaseRoute {
     }
 
     register() {
-        console.log('436734573645')
         return {
             path: `/registerMotorista`,
             method: 'POST',
@@ -98,7 +92,6 @@ class AuthMotoristaRoutes extends BaseRoute {
             },
             handler: async (request, response) => {
                 const userData = request.payload
-                console.log(userData)
                 const cod = await PasswordHelper.hashPassword(userData.password)
                 userData.password = cod
 
@@ -119,55 +112,6 @@ class AuthMotoristaRoutes extends BaseRoute {
 
         }
     }
-    upload() {
-        return {
-            path: `/upload`,
-            method: 'POST',
-            config: {
-                auth: false,
-                tags: ['api'],
-                description: 'Deve criar um motorista',
-                notes: 'Cria um motorista e retorna o ID criado',
-                payload: {
-                    output: 'stream',
-                }
-            },
-            handler: (req, h) => {
-                const { payload } = req
-                const handleFileUpload = foto => {
-                    return new Promise((resolve, reject) => {
-                        const filename = foto.hapi.filename
-                        const data = foto._data
-                        fs.writeFile('./uploads/' + filename, data, err => {
-                            if (err) {
-                                console.log('erro na imagem')
-                                reject(err)
-                            }
-                            resolve({ message: 'Upload successfully!' })
-                        })
-                    })
-                }
-                console.log(payload.foto)
-                const response = handleFileUpload(payload.foto)
-                return response
-            }
-        }
-    }
-    view() {
-        return {
-            method: 'GET',
-            path: '/uploads/{foto*}',
-            handler: {
-                directory: {
-                    path: 'uploads'
-                }
-            }
-        }
-    }
 }
-
-
-
-
 module.exports = AuthMotoristaRoutes
 

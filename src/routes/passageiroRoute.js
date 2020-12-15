@@ -5,11 +5,6 @@ const failAction = (request, headers, erro) => {
     throw erro;
 } 
 
-const headers =  Joi.object({
-    authorization: Joi.string().required()
-}).unknown()
-
-
 class PassageiroRoutes extends BaseRoute {
     constructor(db) {
         super()
@@ -27,7 +22,6 @@ class PassageiroRoutes extends BaseRoute {
                 notes: 'Pode filtar por nome',
                 validate: {
                     failAction,
-                    //headers,
                     query: {
                         presenca: Joi.boolean()
                     }
@@ -57,7 +51,6 @@ class PassageiroRoutes extends BaseRoute {
                 notes: 'Pode filtar por nome',
                 validate: {
                     failAction,
-                    //headers,
                     params: {
                         id: Joi.string(),
                     }
@@ -92,9 +85,7 @@ class PassageiroRoutes extends BaseRoute {
                     // headers -> header
                     //params -> na URL :id
                     //query -> ?nome=Batman
-                    failAction: (erro) => {
-                        throw erro;
-                    },
+                    failAction,
                     params: {
                         id: Joi.string().required(),
                     },
@@ -103,7 +94,7 @@ class PassageiroRoutes extends BaseRoute {
                     },
                 }
             },
-            handler: async (request, headers) => {
+            handler: async (request) => {
                 try {
                     const {
                         id
@@ -140,16 +131,14 @@ class PassageiroRoutes extends BaseRoute {
             method: 'DELETE',
             config: {
                 tags: ['api'],
+                auth: false,
                 description: 'Deve excluir o passageiro pelo ID',
                 notes: 'o id tem que ser valido',
                 validate: {
-                    failAction: (requrest, headers, erro) => {
-                        throw erro;
-                    },
+                    failAction,
                     params: {
                         id: Joi.number().required()
-                    },
-                    headers
+                    }
                 }
             },
             handler: async (request) => {

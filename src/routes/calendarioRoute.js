@@ -5,10 +5,6 @@ const failAction = (request, headers, erro) => {
     throw erro;
 } 
 
-const headers =  Joi.object({
-    authorization: Joi.string().required()
-}).unknown()
-
 class CalendarioRoutes extends BaseRoute {
     constructor(db) {
         super()
@@ -32,7 +28,7 @@ class CalendarioRoutes extends BaseRoute {
                     },
                 }
             },
-            handler: (request, headers) => {
+            handler: (request) => {
                 try {
                     const { id_passageiro, date } = request.query
                     const query = {id_passageiro: id_passageiro, date: date}

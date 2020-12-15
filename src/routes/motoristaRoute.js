@@ -4,12 +4,6 @@ const Boom = require('Boom')
 const failAction = (request, headers, erro) => {
     throw erro;
 } 
-
-
-const headers =  Joi.object({
-    authorization: Joi.string().required()
-}).unknown()
-
 class MotoristaRoutes extends BaseRoute {
     constructor(db) {
         super()
@@ -21,6 +15,7 @@ class MotoristaRoutes extends BaseRoute {
             path: '/motoristas',
             method: 'GET',
             config: {
+                auth: false,
                 tags: ['api'],
                 description: 'Deve listar motoristas',
                 notes: 'Pode filtar por nome',
@@ -28,11 +23,10 @@ class MotoristaRoutes extends BaseRoute {
                     failAction,                    
                     query: {
                         nome: Joi.string().min(3).max(100)
-                    },
-                    headers,
+                    },               
                 }
             },
-            handler: (request, headers) => {
+            handler: (request, ) => {
                 try {
                     const { nome } = request.query
                     const query = nome ? {
@@ -54,16 +48,15 @@ class MotoristaRoutes extends BaseRoute {
             method: 'PATCH',
             config: {
                 tags: ['api'],
+                auth: false,
                 description: 'Deve atualizar Motorista',
                 notes: 'Deve atualizar motorista através do ID',
                 validate: {
                     // payload -> body
-                    // headers -> header
+                    //headers -> header
                     //params -> na URL :id
                     //query -> ?nome=Batman
-                    failAction: (requrest, headers, erro) => {
-                        throw erro;
-                    },
+                    failAction,
                     params: {
                         id: Joi.string().required(),
                     },
@@ -76,10 +69,10 @@ class MotoristaRoutes extends BaseRoute {
                         email: Joi.string().min(3).max(100),       
                         foto: Joi.any()          
                     },
-                    headers,
+                    
                 }
             },
-            handler: async (request, headers) => {
+            handler: async (request, ) => {
                 try {
                     const {
                         id
@@ -115,16 +108,14 @@ class MotoristaRoutes extends BaseRoute {
             method: 'DELETE',
             config: {
                 tags: ['api'],
+                auth: false,
                 description: 'Deve excluir o motorista pelo ID',
                 notes: 'o id tem que ser valido',
                 validate: {
-                    failAction: (requrest, headers, erro) => {
-                        throw erro;
-                    },
+                    failAction,
                     params: {
                         id: Joi.string().required()
-                    },
-                    headers,
+                    },                    
                 }
             },
             handler: async (request) => {

@@ -95,7 +95,7 @@ class AuthMotoristaRoutes extends BaseRoute {
                     }          
                 }
             },
-            handler: async (request, headers) => {                
+            handler: async (request) => {                
                 const userData = request.payload
                 const cod = await PasswordHelper.hashPassword(userData.password)
                 userData.password = cod
